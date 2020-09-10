@@ -7,5 +7,4 @@
 4. Создать вью функцию (PATH: /books/create/) которая создает одну книгу.
 
 БОНУС:
-    https://tutorial.djangogirls.org/ru/
-   
+   https://tutorial.djangogirls.org/ru/
