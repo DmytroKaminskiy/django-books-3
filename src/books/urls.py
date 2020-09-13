@@ -9,4 +9,5 @@ urlpatterns = [
     path('gp/', uv.generate_password),
     path('users/', uv.users),
     path('cu/', uv.create_user),
+    path('uu/<int:pk>/', uv.update_user),
 ]
