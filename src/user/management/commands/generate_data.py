@@ -8,7 +8,7 @@ from django.db.utils import IntegrityError
 
 
 class Command(BaseCommand):
-    help = 'generate random data'
+    help = 'generate random data'  # noqa
 
     def handle(self, *args, **options):
         fake = Faker()
@@ -22,6 +22,4 @@ class Command(BaseCommand):
                     age=random.randint(1, 100),
                 )
             except IntegrityError:
-                print(email)
-
-        print(User.objects.count())
+                pass

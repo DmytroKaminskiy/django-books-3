@@ -10,3 +10,6 @@
   python src/manage.py generate_books (по-умолчанию 1_000)
   3.2 Использовать в команде Book.objects.bulk_create()
   https://docs.djangoproject.com/en/3.0/ref/models/querysets/#bulk-create
+
+docker exec healthy-backend ./src/manage.py check &&
+docker exec healthy-backend ./src/manage.py makemigrations --check --dry-run &&

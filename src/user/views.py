@@ -1,11 +1,9 @@
 from user.models import User
 from user.forms import UserForm
 from user.utils import generate_random_password
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 
-from django.http import HttpResponse, HttpResponseRedirect, Http404
-
-from faker import Faker
+from django.http import HttpResponse
 
 
 def generate_password(request):
@@ -16,11 +14,11 @@ def generate_password(request):
 
 
 def users(request):
-    users = User.objects.all()
-    results = ''
-    for user in users:
-        results += f'ID: {user.id}, Email: {user.email}'
-    return HttpResponse(results)
+    # print("IP Address for debug-toolbar: " + request.META['REMOTE_ADDR'])
+    context = {
+        'user_list': User.objects.all(),
+    }
+    return render(request, 'list_users.html', context)
 
 
 def create_user(request):
@@ -28,7 +26,8 @@ def create_user(request):
         form = UserForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/users/')
+            # return HttpResponseRedirect(reverse('users-name'))
+            return redirect('users-name')
     elif request.method == 'GET':
         form = UserForm()
 
@@ -53,14 +52,22 @@ def update_user(request, pk):
         form = UserForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/users/')
+            # return HttpResponseRedirect(reverse('users-name'))
+            return redirect('users-name')
     elif request.method == 'GET':
         # instance == type(user) == User
         form = UserForm(instance=user)
 
-    context = {'user_form': form}
+    context = {
+        'user_form': form,
+        'user_instance': user,
+    }
     return render(
         request,
         'create_user.html',
         context=context,
     )
+
+
+def index(request):
+    return render(request, 'index.html')
