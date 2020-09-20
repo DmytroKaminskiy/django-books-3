@@ -53,6 +53,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'user.middlewares.SimpleMiddleware',
+    'user.middlewares.GoogleLead',
 ]
 
 ROOT_URLCONF = 'books.urls'

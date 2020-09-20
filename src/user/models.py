@@ -14,3 +14,15 @@ class User(models.Model):
     @property
     def full_name(self):
         return f'{self.last_name} {self.first_name}'
+
+    def save(self, *args, **kwargs):
+        print('User Model Before Save')
+        # self.email = self.email.lower()
+        # self.first_name = self.first_name.title()
+        # self.last_name = self.last_name.title()
+        super().save(*args, **kwargs)
+        print('User Model After Save')
+
+
+class GclidClick(models.Model):
+    value = models.CharField(max_length=256, unique=True)

@@ -1,15 +1,10 @@
 # django-books-3
 
-1. flake8 (flake8, flake8-builtins, flake8-import-order, flake8-print)
-2. Travis CI
-3. Создать команду generate_books (10_000)
-
-БОНУС
-  3.1 Передавать пармаетр в команду который регулирует количество создавемых книг
-  python src/manage.py generate_books 100 (по-умолчанию 1_000)
-  python src/manage.py generate_books (по-умолчанию 1_000)
-  3.2 Использовать в команде Book.objects.bulk_create()
-  https://docs.djangoproject.com/en/3.0/ref/models/querysets/#bulk-create
-
-docker exec healthy-backend ./src/manage.py check &&
-docker exec healthy-backend ./src/manage.py makemigrations --check --dry-run &&
+1. Добавить поле phone в модель User (CharField(max_length=30))
+2. Создать сигнал User/pre_save который будет "чистить" поле phone (оставить только цифры)
+3. Создать модель Logger с полями
+   method = {"GET", "POST"} - request.method
+   path = "/users/list/" - request.path
+   response_time = время работы вью функции
+   created = время создания записи в БД.
+4. Сохранять каждый запрос в таблицу Logger (использовать Middlewares)
