@@ -1,3 +1,5 @@
+from time import sleep
+
 import random
 import string
 
@@ -11,3 +13,7 @@ def generate_random_password(password_len: int = 10) -> str:
     for _ in range(password_len):
         result += random.choice(chars)
     return result
+
+
+def smth_slow(wait=10):
+    sleep(wait)

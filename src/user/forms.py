@@ -1,6 +1,7 @@
 
 from django import forms
 from user.models import User
+from user.tasks import send_email_async
 
 
 class UserForm(forms.ModelForm):
@@ -24,4 +25,13 @@ class UserForm(forms.ModelForm):
         user.save()
         print('User Form After Save')
         return user
+
+class ContactUsForm(forms.Form):
+    subject = forms.CharField()
+    text = forms.CharField()
+
+    def save(self):
+        subject = self.cleaned_data['subject']
+        text = self.cleaned_data['text']
+        send_email_async.delay(subject, text)
 

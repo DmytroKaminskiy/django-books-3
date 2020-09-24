@@ -1,6 +1,7 @@
 from user.models import User
-from user.forms import UserForm
-from user.utils import generate_random_password
+from user.forms import UserForm, ContactUsForm
+from user.tasks import smth_slow_async
+from user.utils import generate_random_password, smth_slow
 from django.shortcuts import render, get_object_or_404, redirect
 
 from django.http import HttpResponse
@@ -71,3 +72,30 @@ def update_user(request, pk):
 
 def index(request):
     return render(request, 'index.html')
+
+
+def slow(request):
+    print('START')
+    smth_slow_async.delay()
+    print('END')
+    return render(request, 'index.html')
+
+
+def contact(request):
+
+    if request.method == 'POST':
+        form = ContactUsForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('users-name')
+    elif request.method == 'GET':
+        form = ContactUsForm()
+
+    context = {
+        'form': form,
+    }
+    return render(
+        request,
+        'contact_us.html',
+        context=context,
+    )
