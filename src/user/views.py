@@ -1,4 +1,5 @@
 from user.models import User
+from book.models import Book
 from user.forms import UserForm, ContactUsForm
 from user.tasks import smth_slow_async
 from user.utils import generate_random_password, smth_slow
@@ -16,11 +17,22 @@ def generate_password(request):
 
 def users(request):
     # print("IP Address for debug-toolbar: " + request.META['REMOTE_ADDR'])
+    users_queryset = User.objects.all().prefetch_related('books')
     context = {
-        'user_list': User.objects.all(),
+        'user_list': users_queryset,
     }
     return render(request, 'list_users.html', context)
 
+def books(request):
+        # .defer('author__first_name', 'author__last_name') \
+    books_queryset = Book.objects.all() \
+        .only('id', 'title', 'author__email',
+              'author__last_name', 'author__first_name')\
+        .select_related('author')
+    context = {
+        'books': books_queryset,
+    }
+    return render(request, 'list_books.html', context)
 
 def create_user(request):
     if request.method == 'POST':

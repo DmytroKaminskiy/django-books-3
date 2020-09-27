@@ -15,6 +15,7 @@ urlpatterns = [
     path("contact/", uv.contact, name='contact'),
     path('gp/', uv.generate_password),
     path('users/list/', uv.users, name='users-name'),
+    path('books/list/', uv.books, name='books-list'),
     path('cu/', uv.create_user, name='users-create'),
     path('users/<int:pk>/update/', uv.update_user, name='users-update'),
 ]

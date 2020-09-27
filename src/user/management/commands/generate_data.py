@@ -2,6 +2,7 @@ from faker import Faker
 import random
 
 from user.models import User
+from book.models import Book
 
 from django.core.management.base import BaseCommand
 from django.db.utils import IntegrityError
@@ -12,7 +13,9 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         fake = Faker()
-        for _ in range(10_000):
+        User.objects.all().delete()
+
+        for _ in range(1_000):
             try:
                 email = fake.email()
                 User.objects.create(
@@ -23,3 +26,11 @@ class Command(BaseCommand):
                 )
             except IntegrityError:
                 pass
+
+        for i in range(1_000):
+            author = User.objects.order_by('?').last()
+            Book.objects.create(
+                title=f'Title {i}',
+                # author=author,
+                author_id=author.id,
+            )

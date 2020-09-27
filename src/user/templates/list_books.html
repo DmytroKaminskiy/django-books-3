@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <a href="{% url 'index' %}">Home</a>
+    {% for book in books %}
+        <p>
+            ID: {{ book.id }},
+            Title: {{ book.title }},
+            {{ book.author.email }},
+            {{ book.author.full_name }}
+        </p>
+    {% endfor %}
+{% endblock content %}
